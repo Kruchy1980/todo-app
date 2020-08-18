@@ -28,3 +28,6 @@ Prosty projekt, który pozwala użytkownikowi na tworzenie kolejnych zadań np d
 8. Jeśli wpis będzie pusty -> w wyskakującym okienku pojawi się komunikat ostrzegawczy że nie nazwa nie moze być pusta
 9. Przycisk Anuluj zamyka okno bez zmian w naszym zadaniu
 10. Przycisk akceptacji Po wpisaniu nowej lub poprawionej nazwy i kliknięciu przycisku akceptacji nazwa zadania zostanie zmieniona, a wyskakujące okienko zostanie zamknięte.
+
+### URL of project
+_https://kruchy1980.github.io/todo-app/_
