@@ -14,11 +14,11 @@
 :root {
     --deep-dark: #1a1a1a;
     --light-dark: #363535;
-    --light-blue: #087deb;
+    --light-green: #04bb04;
     --deep-blue: #0254a1;
     --alert-color: #cf0707;
     --light: #eee;
-    --edit-color: #04bb04;
+    --edit-color: #087deb;
 }
 
 
@@ -27,6 +27,7 @@
 body {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     font-family: "Montserrat", sans-serif;
     margin-top: 120px;
     background-color: var(--light);
@@ -36,6 +37,7 @@ body {
 /* Todo-app */
 
 .todo-app {
+    margin: 20px auto;
     width: 95%;
     max-width: 800px;
     text-align: center;
@@ -51,6 +53,7 @@ body {
     margin-bottom: 20px;
     color: var(--light);
     text-transform: uppercase;
+    text-align: center;
 }
 
 
@@ -59,7 +62,7 @@ body {
 .header {
     padding: 40px;
     border-radius: 5px 5px 0 0;
-    background-image: linear-gradient(340deg, #045de9 0%, #09c6f9 100%);
+    background-image: radial-gradient(ellipse at left, #2b2e33 30%, #646961 80%);
 }
 
 
@@ -81,6 +84,17 @@ body {
 .alert-info {
     margin-top: 20px;
     color: var(--alert-color);
+}
+
+
+/* Add section */
+
+.add-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
 }
 
 
@@ -130,6 +144,9 @@ body {
     padding-left: 20px;
     text-align-last: left;
     list-style: none;
+}
+
+.todo-list li:nth-child(2n) {
     background-color: var(--light);
 }
 
@@ -155,17 +172,27 @@ body {
     background-color: transparent;
     cursor: pointer;
     transition: background-color 0.5s;
+    border-radius: 10px;
+    outline: none;
 }
 
-.tools button:hover {
+
+/* .tools button:hover {
     background-color: #ddd;
-}
+} */
 
 
 /* Complete button */
 
 .complete {
-    color: var(--light-blue);
+    color: var(--light-green);
+}
+
+button.complete:hover {
+    outline: none;
+    color: var(--light);
+    background-color: var(--light-green);
+    border-radius: 10px;
 }
 
 
@@ -176,11 +203,23 @@ body {
     color: var(--edit-color);
 }
 
+button.edit:hover {
+    outline: none;
+    color: var(--light);
+    background-color: var(--edit-color);
+}
+
 
 /* Delete button */
 
 .delete {
-    color: #ff6347;
+    color: var(--alert-color);
+}
+
+button.delete:hover {
+    outline: none;
+    color: var(--light);
+    background-color: var(--alert-color);
 }
 
 
@@ -192,6 +231,18 @@ body {
     text-decoration: line-through;
 }
 
+button.completed:hover {
+    background-color: var(--light-dark);
+    color: var(--light);
+}
+
+.popup-box {
+    display: flex;
+}
+
+
+/* Popup part */
+
 
 /* Popup */
 
@@ -201,14 +252,15 @@ body {
     align-items: center;
     flex-direction: column;
     position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translate(-50%);
-    width: 95%;
-    max-width: 800px;
+    top: 0%;
+    /* bottom: 20px; */
+    left: 0%;
+    /* transform: translate(-50%, -50%); */
+    width: 100vw;
+    height: 100vh;
+    /* max-width: 800px; */
     color: var(--light);
-    background-color: var(--light-dark);
-    border-radius: 8px;
+    background-image: linear-gradient(320deg, var(--light-green) 30%, var(--edit-color) 83%);
 }
 
 
@@ -217,6 +269,7 @@ body {
 .popup-title {
     padding: 20px;
     font-size: 24px;
+    font-weight: bold;
 }
 
 
@@ -226,8 +279,6 @@ body {
     margin-bottom: 20px;
     color: var(--alert-color);
     background-color: transparent;
-    /* padding: 8px 15px;
-    border-radius: 5px; */
     font-weight: bold;
 }
 
@@ -238,7 +289,8 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 90%;
+    width: 95%;
+    max-width: 800px;
     padding: 10px;
 }
 
@@ -246,7 +298,7 @@ body {
 /* Popup input */
 
 .popup input {
-    width: 100%;
+    width: 90%;
     padding: 10px 20px;
     color: none;
     border-radius: 8px;
@@ -261,7 +313,7 @@ body {
     width: 30%;
     text-align: center;
     padding: 10px 0;
-    margin: 20px;
+    margin: 20px 40px;
     border: none;
     border-radius: 8px;
     color: var(--deep-dark);
@@ -272,6 +324,7 @@ body {
 }
 
 .popup-btn:hover {
-    background-color: var(--light-blue);
-    color: var(--light);
+    background-color: transparent;
+    color: var(--deep-dark);
+    font-weight: bold;
 }

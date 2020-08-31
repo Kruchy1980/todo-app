@@ -26,6 +26,7 @@ let $acceptPopupBtn;
 // 13. Close/Cancel popup button
 let $cancelPopupBtn;
 
+
 // II. Functions
 // 1. Main function responsible for preparing DOM to the work
 const main = () => {
@@ -35,7 +36,6 @@ const main = () => {
 
 // 2. Add new task method
 const addNewTask = () => {
-    // console.log('ok');
     // Check if the todoInput is not empty
     if ($todoInput.value !== '') {
         // First create id as unique element of task
@@ -45,7 +45,6 @@ const addNewTask = () => {
         // Add the text to our new task
         $newTask.innerText = $todoInput.value;
         // Add id to our new task
-        // $newTask.id = `${$taskId}`;
         // OR
         $newTask.setAttribute('id', `${$taskId}`);
         // Add the task to our list of tasks
@@ -63,6 +62,7 @@ const addNewTask = () => {
         // console.log('Empty task');
         $alertInfo.textContent = 'Task can not be empty!';
     }
+    communicateMessage();
 };
 
 // 3. Adding on enter
@@ -74,6 +74,7 @@ const enterCheck = () => {
 
 // 4. Closing  and  clear popup on cancel
 const closeAndClearPopup = () => {
+    $oldName = '';
     $popupInput.value = '';
     $popup.style.display = 'none';
     $popupInfo.innerText = '';
@@ -81,18 +82,14 @@ const closeAndClearPopup = () => {
 
 // 5. Update task content
 const editTask = event => {
-    console.log(event, event.target, event.target.closest('li'), Number(event.target.closest('li').id), typeof event.target.closest('li').id);
+
     // Assign popupInput value to specified task
     const taskToEdit = event.target.closest('li').id;
     // // console.log(taskToEdit, taskToEdit.id, typeof taskToEdit.id, typeof Number(taskToEdit));
-    console.log(taskToEdit);
+    // console.log(taskToEdit);
     $editedTodo = document.getElementById(`${taskToEdit}`);
-    console.log($editedTodo);
-    console.log($editedTodo.textContent);
     // Add the text from our task to popupInput to edit it if typo or set a new name
-    $popupInput.value = $editedTodo.firstChild.textContent;
-
-
+    $popupInput.placeholder = `Old Task Name: ${$editedTodo.firstChild.textContent}`;
     // And open $popup
     $popup.style.display = 'flex';
 };
@@ -119,13 +116,14 @@ const prepareDOMElements = () => {
     $todoInput = document.querySelector('.todo-input');
     $alertInfo = document.querySelector('.alert-info');
     $addBtn = document.querySelector('.add-btn');
-    $ulList = document.querySelector('.todo-list ul');
+    $ulList = document.querySelector('.tasks');
     $allTask = document.getElementsByTagName('li');
     $popup = document.querySelector('.popup');
     $popupInfo = document.querySelector('.popup-info');
     $popupInput = document.querySelector('.popup-input');
     $acceptPopupBtn = document.querySelector('.accept');
     $cancelPopupBtn = document.querySelector('.cancel');
+    $oldName = document.querySelector('.old-display');
 };
 // 2. Prepare the Event listeners for the project
 const prepareDOMEvents = () => {
@@ -170,9 +168,7 @@ const addTools = () => {
 
 // 4. Checking which element/task is clicked
 const checkTool = event => {
-    // console.log(event.target.id, event.target);
-    // Prepare variables to refactor code
-    // Statement if wit using closest button
+
     // With the secure if we clicn on the text or out of buttons somewhere
     if (event.target.classList.value !== '') {
         // Prepare variables to refactor code
@@ -184,17 +180,15 @@ const checkTool = event => {
         // Closest li used for updating the specified task 
         const specifiedTask = event.target.closest('li');
         if (completeTool) {
-            // console.log('complete was clicked:)');
+
             specifiedTask.classList.toggle('completed');
             event.target.closest('button').classList.toggle('completed');
+            communicateMessage();
         } else if (editTool) {
-            // console.log('edit was clicked');
-            // Open the popup
+
             editTask(event);
         } else if (deleteTool) {
-            // console.log('delete was clicked');
-            // specifiedTask.innerHTML = '';
-            // Or with help function
+
             deleteTodo(specifiedTask);
         }
     };
@@ -203,14 +197,23 @@ const checkTool = event => {
 // 5. Delete specified task
 const deleteTodo = specifiedTask => {
     specifiedTask.remove();
-    // console.log($alertInfo.innerText);
-    // Add an info if there is no tasks
-    if ($allTask.length !== 0) {
-        $alertInfo.innerText = 'You still have something to do!';
-    } else {
-        $alertInfo.innerText = 'There is no tasks on the list!';
-    }
+    communicateMessage();
 };
+
+
+// 6. The display communicate of not finished tasks
+const communicateMessage = () => {
+        // Create an array from HTMLCollection
+        let arr = Array.from($allTask);
+        // Now prepare new array to without the completed tasks
+        let notCompletedTasks = arr.filter(el => !el.classList.contains('completed'));
+        // Add an info if there is no tasks
+        if (notCompletedTasks.length !== 0) {
+            $alertInfo.innerText = `You still have ${(notCompletedTasks.length === 1) ? `${notCompletedTasks.length} task to do !` : `${notCompletedTasks.length} tasks to do !`}`;
+    } else {
+        $alertInfo.innerText = 'You have finished all of your tasks !';
+    }
+}
 
 
 // IV.Event Listeners
